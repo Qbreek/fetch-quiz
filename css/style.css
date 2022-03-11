@@ -49,3 +49,12 @@ header {
   align-items: center;
   gap: 15px;
 }
+
+.user-info-container {
+  border: 3px solid rebeccapurple;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  width: 200px;
+}
