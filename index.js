@@ -3,19 +3,19 @@ async function getUsers(url) {
     const userData = await fetch(url);
     const users = await userData.json();
     users.forEach(user => {
-        createUserElement(user);
+        createUserProfileCardElement(user);
     });
 }
 
-// Creates the user card and appends it to the view.
-function createUserElement(userData) {
+// Creates the user profile card and appends it to the view.
+function createUserProfileCardElement(userData) {
     const userList = document.querySelector('.user-profile-list');
     
     const userCard = document.createElement('li');
     userCard.classList.add('user-profile-card');
 
     const embedProfileSvg = document.createElement('embed');
-    embedProfileSvg.src = 'face_black_36dp.svg'
+    embedProfileSvg.src = 'account_circle_black_36dp.svg'
 
     userCard.append(embedProfileSvg)
 
@@ -33,7 +33,7 @@ function createUserElement(userData) {
     // See selected users post history.
     const seePostsAnchor = document.createElement('a');
     seePostsAnchor.href = './views/userprofile/userprofile.html';
-    seePostsAnchor.textContent = 'See posts';
+    seePostsAnchor.textContent = 'See profile';
     
     seePostsAnchor.addEventListener('click', async () => {
         sessionStorage.setItem('userId', `${userData.id}`);
