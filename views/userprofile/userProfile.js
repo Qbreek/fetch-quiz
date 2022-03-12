@@ -26,9 +26,9 @@ function createPostElementCard(userPostHistory) {
     const postHistoryView = document.querySelector('.post-history-list');
     
     userPostHistory.forEach(post => {
-        const postCardItem = document.createElement('li');
-        postCardItem.classList.add('post-item-card');
-        postCardItem.id = `${post.id}`;
+        const postItemCard = document.createElement('li');
+        postItemCard.classList.add('post-item-card');
+        postItemCard.id = `${post.id}`;
 
         const titleAndButtonContainer = document.createElement('div');
         titleAndButtonContainer.classList.add('title-and-buttons-container');
@@ -50,6 +50,15 @@ function createPostElementCard(userPostHistory) {
         const deleteBtn = document.createElement('button');
         deleteBtn.classList.add('post-card-btn');
 
+        deleteBtn.addEventListener('click', () => {
+
+            fetch(`https://jsonplaceholder.typicode.com/posts/${postItemCard.id}`, {
+            method: 'DELETE',
+            })
+            .then (response => console.log(response));
+
+        })
+
         const embedDeleteSvg = document.createElement('embed');
         embedDeleteSvg.classList.add()
         embedDeleteSvg.src = '/svg/delete_black_24dp.svg';
@@ -63,9 +72,9 @@ function createPostElementCard(userPostHistory) {
         const body = document.createElement('p');
         body.textContent = post.body;
 
-        postCardItem.append(titleAndButtonContainer, body);
+        postItemCard.append(titleAndButtonContainer, body);
         
-        postHistoryView.append(postCardItem);
+        postHistoryView.append(postItemCard);
     })
 }
 
