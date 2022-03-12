@@ -1,5 +1,6 @@
 // Fetches data from the provided url argument.
 async function getUsers(url) {
+    
     const userData = await fetch(url);
     const users = await userData.json();
     users.forEach(user => {
@@ -9,6 +10,7 @@ async function getUsers(url) {
 
 // Creates the user profile card and appends it to the view.
 function createUserProfileCardElement(userData) {
+    
     const userList = document.querySelector('.user-profile-list');
     
     const userCard = document.createElement('li');
@@ -42,5 +44,11 @@ function createUserProfileCardElement(userData) {
     userList.append(userCard);
 }
 
-getUsers('https://jsonplaceholder.typicode.com/users');
+function main() {
+    
+    getUsers('https://jsonplaceholder.typicode.com/users');
+}
+
+main();
+
 
