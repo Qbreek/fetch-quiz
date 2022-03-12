@@ -12,10 +12,10 @@ function createUserProfileCardElement(userData) {
     const userList = document.querySelector('.user-profile-list');
     
     const userCard = document.createElement('li');
-    userCard.classList.add('user-profile-card');
+    userCard.classList.add('user-profile-card-index');
 
     const embedProfileSvg = document.createElement('embed');
-    embedProfileSvg.src = 'account_circle_black_36dp.svg'
+    embedProfileSvg.src = './svg/account_circle_black_36dp.svg'
 
     userCard.append(embedProfileSvg)
 
