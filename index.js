@@ -34,7 +34,7 @@ function createUserProfileCardElement(userData) {
 
     // See selected users post history.
     const seePostsAnchor = document.createElement('a');
-    seePostsAnchor.href = '/userprofile.html';
+    seePostsAnchor.href = './userprofile.html';
     seePostsAnchor.textContent = 'See profile';
     
     seePostsAnchor.addEventListener('click', async () => {
