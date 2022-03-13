@@ -1,8 +1,8 @@
-import getUsers from "./modules/getUsers.js";
+import displayUsers from "./modules/displayUsers.js";
 
 function index() {
     
-    getUsers('https://jsonplaceholder.typicode.com/users');
+    displayUsers('https://jsonplaceholder.typicode.com/users');
 }
 
 index();
