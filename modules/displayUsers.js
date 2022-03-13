@@ -1,11 +1,22 @@
 // Fetches data from the provided url argument.
 export default async function displayUsers(url) {
     
-    const userData = await fetch(url);
-    const users = await userData.json();
-    users.forEach(user => {
-        createUserProfileCardElement(user);
-    });
+    try {
+
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+       
+        const users = await response.json();
+        users.forEach(user => {
+            createUserProfileCardElement(user);
+        });
+    
+    } catch(error) {
+
+        console.error(`Could not get users: ${error}`);
+    }
 }
 
 // Creates the user profile card and appends it to the view.
@@ -34,7 +45,8 @@ function createUserProfileCardElement(userData) {
 
     // See selected users post history.
     const seeProfileAnchor = document.createElement('a');
-    seeProfileAnchor.href = './userprofile.html';
+    
+    seeProfileAnchor.href = './views/userprofile.html';
     seeProfileAnchor.textContent = 'See profile';
     
     seeProfileAnchor.addEventListener('click', () => {

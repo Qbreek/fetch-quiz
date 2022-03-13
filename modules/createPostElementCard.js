@@ -25,6 +25,10 @@ export default function createPostElementCard(postInfo) {
 
     const [saveBtn, editBtn, undoBtn, deleteBtn] = createPostCardButtons('Save', 'Edit', 'Undo', 'Del');
 
+    // Used for undo and save buttons
+    let previousTitle = title.textContent;
+    let previousBody = body.textContent;
+
     // These remain hidden until the user presses the edit button.
     const newTitleInput = document.createElement('input');
     newTitleInput.classList.add('new-title-input-post-item-card');
@@ -44,7 +48,6 @@ export default function createPostElementCard(postInfo) {
         
         titleAndVisibleBtnContainer.replaceChild(newTitleInput, title);
         postItemCard.replaceChild(newBodyTextarea, body);
-        console.log(postIdSecure);
     })
     
     // perform pseudo delete
@@ -53,9 +56,9 @@ export default function createPostElementCard(postInfo) {
         document.querySelector('.post-history-list').removeChild(postItemCard);
 
         fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {method: 'DELETE'})
-        .then (response => console.log(response))
-        .then (console.log('See line 50 at createPostElementCard.js'))
-        .then (alert('Check console'))
+        .then(response => console.log(response))
+        .then(console.log('See line 55 at createPostElementCard.js'))
+        .then(alert('Check console'));
     })
 
     // perform pseudo patch
@@ -75,12 +78,33 @@ export default function createPostElementCard(postInfo) {
             body: body.textContent
         }
 
-        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {
-            method: 'PATCH',
-            body: JSON.stringify(updateObject),
-            headers: {'Content-type': 'application/json; charset=UTF-8'},
-            })
-        .then((response) => console.log(response))
+        if (previousTitle != title.textContent || previousBody != body.textContent ) {
+
+            previousTitle = title.textContent;
+            previousBody = body.textContent;
+
+            fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {
+                method: 'PATCH',
+                body: JSON.stringify(updateObject),
+                headers: {'Content-type': 'application/json; charset=UTF-8'},
+                })
+            .then((response) => console.log(response))
+            .then(console.log('See line 66 at CreatePostElementCard.js'))
+            .then(alert('Check console'));
+        }
+    })
+
+    undoBtn.addEventListener('click', () => {
+        
+        editBtn.disabled = false;
+        editBtn.style.background = 'white';
+        hiddenBtnContainer.style.display = 'none';
+
+        newTitleInput.value = previousTitle;        
+        newBodyTextarea.value = previousBody;
+        
+        titleAndVisibleBtnContainer.replaceChild(title, newTitleInput);
+        postItemCard.replaceChild(body, newBodyTextarea);
     })
     
     editDeleteBtnContainer.append(editBtn, deleteBtn);
