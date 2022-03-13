@@ -1,108 +1,104 @@
-// Creates post card HTML element and appends it to view.
 export default function createPostElementCard(postInfo) {
+
+    const postIdSecure = postInfo.id;   // Used as a pointer for requesting a patch on the post
     
+    // Create the post card item which holds all the post info
     const postItemCard = document.createElement('li');
     postItemCard.classList.add('post-item-card');
-    postItemCard.id = `${postInfo.id}`;
+
+    // Create containers for post card elements
+    const titleAndVisibleBtnContainer = document.createElement('div');
+    titleAndVisibleBtnContainer.classList.add('title-and-visible-buttons-container');
+
+    const hiddenBtnContainer = document.createElement('div');
+    hiddenBtnContainer.classList.add('hidden-btn-container');
+
+    const editDeleteBtnContainer = document.createElement('div');
+    editDeleteBtnContainer.classList.add('buttons-container-postcard');
+
+    // Create elements of post card item 
+    let title = document.createElement('h2');
+    title.textContent = postInfo.title;
     
-    const postIdSecure = postInfo.id;   // Prevents user from changing the HTML id and then sending a Delete request
+    let body = document.createElement('p');
+    body.textContent = postInfo.body;
 
-    const saveUndoBtnContainer = document.createElement('div');
-    saveUndoBtnContainer.classList.add('save-undo-btns');
+    const [saveBtn, editBtn, undoBtn, deleteBtn] = createPostCardButtons('Save', 'Edit', 'Undo', 'Del');
 
-    const saveChangesBtn = document.createElement('button');
-    saveChangesBtn.classList.add('post-card-btn');
+    // These remain hidden until the user presses the edit button.
+    const newTitleInput = document.createElement('input');
+    newTitleInput.classList.add('new-title-input-post-item-card');
+    newTitleInput.setAttribute('type', 'text');
+    newTitleInput.value = title.textContent;
 
-    saveChangesBtn.addEventListener('click', () => {
-        const title = document.createElement('h2');
-        const newTitle = document.querySelector('.new-title-input-post-item-card').value;
-        title.textContent = newTitle;
+    const newBodyTextarea = document.createElement('textarea');
+    newBodyTextarea.classList.add('new-body-textarea-post-item-card');
+    newBodyTextarea.textContent = body.textContent;
 
-        console.log(title);
-
-
-        const titleAndButtonsContainer = document.createElement('div');
-        titleAndButtonsContainer.classList.add('title-and-buttons-container');
-        
-        titleAndButtonsContainer.append(title, buttonsContainer);
-
-        const body = document.createElement('p');
-        body.textContent = postInfo.body;
-    })
-    
-    const discardChangesBtn = document.createElement('button');
-    discardChangesBtn.classList.add('post-card-btn');
-
-    saveChangesBtn.textContent = 'Save';
-    discardChangesBtn.textContent = 'Undo';
-
-    saveUndoBtnContainer.append(saveChangesBtn, discardChangesBtn);
-
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.classList.add('buttons-container-postcard');
-    
-    const editBtn = document.createElement('button');
-    editBtn.classList.add('post-card-btn');
-    editBtn.textContent = 'Edit';
-
+    // Add functionality to button elements
     editBtn.addEventListener('click', () => {
         
         editBtn.disabled = true;
         editBtn.style.background = '#f7b633';
+        hiddenBtnContainer.style.display = 'flex';
         
-        let titleText = postInfo.title;
-        let bodyText = postInfo.body;
-
-        titleAndButtonsContainer.removeChild(title);
-        postItemCard.removeChild(body);
-
-        const newTitleInput = document.createElement('input');
-        newTitleInput.classList.add('new-title-input-post-item-card');
-        newTitleInput.setAttribute('type', 'text');
-        newTitleInput.value = titleText;
-        
-        const newBodyInput = document.createElement('textarea');
-        newBodyInput.classList.add('new-body-textarea-post-item-card');
-        newBodyInput.textContent = bodyText;
-        titleAndButtonsContainer.prepend(newTitleInput);
-        postItemCard.append(newBodyInput);
-        postItemCard.append(saveUndoBtnContainer)
+        titleAndVisibleBtnContainer.replaceChild(newTitleInput, title);
+        postItemCard.replaceChild(newBodyTextarea, body);
+        console.log(postIdSecure);
     })
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('post-card-btn');
-    deleteBtn.textContent = 'Del';
-
+    
     // perform pseudo delete
     deleteBtn.addEventListener('click', () => {
 
-        const postHistoryView = document.querySelector('.post-history-list');
-        postHistoryView.removeChild(postItemCard);
+        document.querySelector('.post-history-list').removeChild(postItemCard);
 
-        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {
-        method: 'DELETE',
-        })
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {method: 'DELETE'})
         .then (response => console.log(response))
-        .then (console.log('See line 49 at userProfile.js'))
-        .then (alert('Check console!'))
+        .then (console.log('See line 50 at createPostElementCard.js'))
+        .then (alert('Check console'))
     })
 
-    buttonsContainer.append(editBtn, deleteBtn);
+    // perform pseudo patch
+    saveBtn.addEventListener('click', () => {
+
+        editBtn.disabled = false;
+        editBtn.style.background = 'white';
+        hiddenBtnContainer.style.display = 'none';
+
+        title.textContent = newTitleInput.value;        
+        body.textContent = newBodyTextarea.value;
+        titleAndVisibleBtnContainer.replaceChild(title, newTitleInput);
+        postItemCard.replaceChild(body, newBodyTextarea);
+
+        const updateObject = {
+            title: title.textContent,
+            body: body.textContent
+        }
+
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updateObject),
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+            })
+        .then((response) => console.log(response))
+    })
     
-    const title = document.createElement('h2');
-    title.textContent = postInfo.title;
-
-    const titleAndButtonsContainer = document.createElement('div');
-    titleAndButtonsContainer.classList.add('title-and-buttons-container');
-    
-    titleAndButtonsContainer.append(title, buttonsContainer);
-
-    const body = document.createElement('p');
-    body.textContent = postInfo.body;
-
-    postItemCard.append(titleAndButtonsContainer, body);
-
+    editDeleteBtnContainer.append(editBtn, deleteBtn);
+    titleAndVisibleBtnContainer.append(title,editDeleteBtnContainer);
+    hiddenBtnContainer.append(saveBtn, undoBtn);
+    postItemCard.append(titleAndVisibleBtnContainer, body, hiddenBtnContainer);
     
     return postItemCard;
 }
 
+function createPostCardButtons (...names) {
+    
+    let buttons = [];
+    names.forEach(name => {
+        const button = document.createElement('button');
+        button.classList.add('post-card-btn');
+        button.textContent = name;
+        buttons.push(button);
+    })
+    return buttons;
+}

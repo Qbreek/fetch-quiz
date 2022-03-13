@@ -1,5 +1,16 @@
+// Fetches user information from the provided url argument using the value stored in session storage.
+export default async function displayUserInformation(url) {
+    
+    const userData = await fetch(url);
+    let users = await userData.json();
+    users = [...users];
+    const userId = Number(sessionStorage.getItem('userId'));
+    const userProfile = users.filter(user => user.id === userId);
+    createFullUserProfileElement(userProfile);
+}
+
 // Creates full user profile using session storage value.
-export default function createFullUserProfileElement(userData) {
+function createFullUserProfileElement(userData) {
    
     const userInfoContainer = document.querySelector('.user-full-profile-card');
 

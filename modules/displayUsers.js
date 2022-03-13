@@ -1,5 +1,15 @@
+// Fetches data from the provided url argument.
+export default async function displayUsers(url) {
+    
+    const userData = await fetch(url);
+    const users = await userData.json();
+    users.forEach(user => {
+        createUserProfileCardElement(user);
+    });
+}
+
 // Creates the user profile card and appends it to the view.
-export default function createUserProfileCardElement(userData) {
+function createUserProfileCardElement(userData) {
     
     const userList = document.querySelector('.user-profile-list');
     
@@ -27,9 +37,10 @@ export default function createUserProfileCardElement(userData) {
     seeProfileAnchor.href = './userprofile.html';
     seeProfileAnchor.textContent = 'See profile';
     
-    seeProfileAnchor.addEventListener('click', async () => {
+    seeProfileAnchor.addEventListener('click', () => {
         sessionStorage.setItem('userId', `${userData.id}`);
     })
     userCard.append(userInfoContainer,seeProfileAnchor);
     userList.append(userCard);
 }
+
