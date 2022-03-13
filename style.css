@@ -81,51 +81,83 @@ h1 {
 
 /* post-card styles*/
 .post-item-card {
-  max-width: 700px;
+  max-width: 600px;
   margin: 40px 20px 50px 20px;
   border: 5px solid black;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .post-item-card {
+    max-width: 300px;
+  }
+}
+
+.post-item-card h2,
+p {
+  padding: 20px;
+  word-wrap: break-word;
+}
+
+.post-item-card p {
+  max-width: 650px;
+}
+
+.post-item-card h2 {
+  max-width: 400px;
 }
 
 .title-and-buttons-container {
   display: flex;
   justify-content: space-between;
   background-color: #c0deed;
-  padding: 20px;
+  padding: 10px 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .title-and-buttons-container {
+    flex-direction: column;
+  }
 }
 
 .buttons-container-postcard {
   display: flex;
-  gap: 5px;
+  gap: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .buttons-container-postcard {
+    justify-content: flex-end;
+  }
 }
 
 .post-card-btn {
-  width: 40px;
-  height: 40px;
-  background-color: inherit;
-  border: 2px solid black;
-  border-radius: 50%;
-  display: block;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  width: 50px;
+  height: 50px;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
 }
 
-.post-card-btn:hover {
-  background-color: white;
-  transition: 0.5s ease-in-out;
-}
-
-.post-item-card h2 {
-  margin-right: 30px;
-}
-
-.post-item-card h2,
-p {
-  border-radius: 5px;
-  padding: 20px;
+.post-card-btn:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
 }
 
 /* form styles */
 form {
   margin: 20px 30px 50px 30px;
+}
+
+form .post-card-btn {
+  width: 100px;
 }
 
 fieldset {
@@ -138,7 +170,7 @@ fieldset {
   padding: 10px 10px;
 }
 
-textarea {
+.form-textarea {
   resize: none;
   min-height: 100px;
 }
@@ -148,7 +180,7 @@ legend {
 }
 
 input,
-textarea {
+.form-textarea {
   border-radius: 5px;
   padding: 10px;
   margin: 5px 5px;
@@ -164,4 +196,35 @@ fieldset > button {
   letter-spacing: 1px;
   border-radius: 5px;
   border: none;
+}
+
+.new-title-input-post-item-card,
+.new-body-textarea-post-item-card {
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 10px 10px;
+  margin: 10px 10px;
+}
+
+.new-body-textarea-post-item-card {
+  min-width: 500px;
+  min-height: 100px;
+  resize: none;
+}
+
+@media screen and (max-width: 600px) {
+  .new-body-textarea-post-item-card {
+    min-width: 250px;
+  }
+
+  .new-title-input-post-item-card {
+    max-width: 235px;
+  }
+}
+
+.save-undo-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 10px;
 }
