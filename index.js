@@ -33,14 +33,14 @@ function createUserProfileCardElement(userData) {
     userInfoContainer.append(userName, userRealName);
 
     // See selected users post history.
-    const seePostsAnchor = document.createElement('a');
-    seePostsAnchor.href = './userprofile.html';
-    seePostsAnchor.textContent = 'See profile';
+    const seeProfileAnchor = document.createElement('a');
+    seeProfileAnchor.href = '/fetch-quiz/views/userprofile/userprofile.html';
+    seeProfileAnchor.textContent = 'See profile';
     
-    seePostsAnchor.addEventListener('click', async () => {
+    seeProfileAnchor.addEventListener('click', async () => {
         sessionStorage.setItem('userId', `${userData.id}`);
     })
-    userCard.append(userInfoContainer,seePostsAnchor);
+    userCard.append(userInfoContainer,seeProfileAnchor);
     userList.append(userCard);
 }
 
