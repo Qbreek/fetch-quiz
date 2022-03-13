@@ -1,11 +1,11 @@
-import getPosts from './modules/getPosts.js'
-import getUserInformation from './modules/getUserInformation.js';
-    
+import displayUserPosts from './modules/displayUserPosts.js'
+import createPostElementCard from './modules/createPostElementCard.js';
+import displayUserInformation from './modules/displayUserInformation.js';
 
-function main() {
+function userProfile() {
     
-    getUserInformation('https://jsonplaceholder.typicode.com/users');
-    getPosts('https://jsonplaceholder.typicode.com/posts');
+    displayUserInformation('https://jsonplaceholder.typicode.com/users');
+    displayUserPosts('https://jsonplaceholder.typicode.com/posts');
 
     const pseudoSubmitBtn = document.querySelector('.post-card-btn');
     
@@ -16,10 +16,9 @@ function main() {
         const bodyInput = document.querySelector('textarea[name="body"]');
        
         const postObject = {
-            userId: Number(sessionStorage.getItem('userId')),
-            id: 101,    // fixed , since there are 100 posts
             title: titleInput.value,
-            body: bodyInput.value
+            body: bodyInput.value,
+            userId: Number(sessionStorage.getItem('userId'))
         };
 
         if (titleInput.value != '' && bodyInput.value != '') {
@@ -35,7 +34,7 @@ function main() {
                 headers: {
                   'Content-type': 'application/json; charset=UTF-8',
                 },
-              })
+            })
             .then((response) => response.json())
             .then((json) => console.log(json))
             .then(() => alert('Check Console'))
@@ -50,4 +49,4 @@ function main() {
     });
 }
 
-main();
+userProfile();

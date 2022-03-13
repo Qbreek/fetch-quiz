@@ -107,7 +107,7 @@ p {
   max-width: 400px;
 }
 
-.title-and-buttons-container {
+.title-and-visible-buttons-container {
   display: flex;
   justify-content: space-between;
   background-color: #c0deed;
@@ -115,7 +115,7 @@ p {
 }
 
 @media screen and (max-width: 600px) {
-  .title-and-buttons-container {
+  .title-and-visible-buttons-container {
     flex-direction: column;
   }
 }
@@ -149,6 +149,37 @@ p {
   box-shadow: 0px 0px 0px 0px;
   top: 5px;
   left: 5px;
+}
+
+.new-title-input-post-item-card,
+.new-body-textarea-post-item-card {
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 10px 10px;
+  margin: 10px 10px;
+}
+
+.new-body-textarea-post-item-card {
+  min-width: 500px;
+  min-height: 100px;
+  resize: none;
+}
+
+@media screen and (max-width: 600px) {
+  .new-body-textarea-post-item-card {
+    min-width: 250px;
+  }
+
+  .new-title-input-post-item-card {
+    max-width: 235px;
+  }
+}
+
+.hidden-btn-container {
+  display: none;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 10px;
 }
 
 /* form styles */
@@ -196,35 +227,4 @@ fieldset > button {
   letter-spacing: 1px;
   border-radius: 5px;
   border: none;
-}
-
-.new-title-input-post-item-card,
-.new-body-textarea-post-item-card {
-  border: 3px solid black;
-  border-radius: 5px;
-  padding: 10px 10px;
-  margin: 10px 10px;
-}
-
-.new-body-textarea-post-item-card {
-  min-width: 500px;
-  min-height: 100px;
-  resize: none;
-}
-
-@media screen and (max-width: 600px) {
-  .new-body-textarea-post-item-card {
-    min-width: 250px;
-  }
-
-  .new-title-input-post-item-card {
-    max-width: 235px;
-  }
-}
-
-.save-undo-btns {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 10px 10px;
 }
