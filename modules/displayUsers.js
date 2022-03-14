@@ -7,7 +7,8 @@ export default async function displayUsers(url) {
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
-       
+        
+        console.log(response);
         const users = await response.json();
         users.forEach(user => {
             createUserProfileCardElement(user);

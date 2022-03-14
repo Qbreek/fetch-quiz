@@ -1,6 +1,7 @@
+// Creates individual post elements and appends them to the view
 export default function createPostElementCard(postInfo) {
 
-    const postIdSecure = postInfo.id;   // Used as a pointer for requesting a patch on the post
+    const postIdSecure = postInfo.id;   // Used as a ''pointer'' for requesting a patch on the post
     
     // Create the post card item which holds all the post info
     const postItemCard = document.createElement('li');
@@ -52,13 +53,7 @@ export default function createPostElementCard(postInfo) {
     
     // perform pseudo delete
     deleteBtn.addEventListener('click', () => {
-
-        document.querySelector('.post-history-list').removeChild(postItemCard);
-
-        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {method: 'DELETE'})
-        .then(response => console.log(response))
-        .then(console.log('See line 55 at createPostElementCard.js'))
-        .then(alert('Check console'));
+        deletePost(postIdSecure, postItemCard);
     })
 
     // perform pseudo patch
@@ -80,17 +75,10 @@ export default function createPostElementCard(postInfo) {
 
         if (previousTitle != title.textContent || previousBody != body.textContent ) {
 
+            updatePost(updateObject, postIdSecure);
             previousTitle = title.textContent;
             previousBody = body.textContent;
-
-            fetch(`https://jsonplaceholder.typicode.com/posts/${postIdSecure}`, {
-                method: 'PATCH',
-                body: JSON.stringify(updateObject),
-                headers: {'Content-type': 'application/json; charset=UTF-8'},
-                })
-            .then((response) => console.log(response))
-            .then(console.log('See line 66 at CreatePostElementCard.js'))
-            .then(alert('Check console'));
+            alert('Check console');
         }
     })
 
@@ -115,6 +103,7 @@ export default function createPostElementCard(postInfo) {
     return postItemCard;
 }
 
+// Creates the postcard element save,undo,edit,delete btns
 function createPostCardButtons (...names) {
     
     let buttons = [];
@@ -125,4 +114,51 @@ function createPostCardButtons (...names) {
         buttons.push(button);
     })
     return buttons;
+}
+
+// Pseudo PATCH method
+async function updatePost(updateObject, postId) {
+
+    const settings = {
+        method: 'PATCH',
+        body : JSON.stringify(updateObject),
+        headers: {'Content-type': 'application/json; charset=UTF-8'},
+    };
+
+    try {
+
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, settings);    
+
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        console.log(response);
+        const json = await response.json();
+        console.log(json);
+
+    }catch(error) {
+
+        console.error(`Couldn't update post: ${error}`);
+    }
+}
+
+// Pseudo DELETE method
+async function deletePost(postId, postItemCard){
+    
+    try {
+        
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {method: 'DELETE'});
+
+        if(!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        console.log(response);
+        document.querySelector('.post-history-list').removeChild(postItemCard);
+    
+    } catch(error) {
+
+        console.error(`Couldn't delete  post: ${error}`);
+    }
 }

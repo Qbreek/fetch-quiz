@@ -1,5 +1,6 @@
 import createPostElementCard from "./createPostElementCard.js";
 
+// Submit post button logic
 export default function formSubmitButtonLogic() {
     
     const titleInput = document.querySelector('input[name="title"]');
@@ -16,12 +17,15 @@ export default function formSubmitButtonLogic() {
         createPost(postObject);
         titleInput.value = '';
         bodyInput.value = '';
+        alert('Check console');
 
     } else {
         
         alert('Please fill out all the input fields');
     }
 }
+
+// Pseudo POST method
 async function createPost(postObject) {
     
     const settings = {
@@ -35,11 +39,12 @@ async function createPost(postObject) {
     try {
 
         const response = await fetch('https://jsonplaceholder.typicode.com/posts', settings);
-       
+        
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
 
+        console.log(response);
         const json = await response.json();
         console.log(json);
 

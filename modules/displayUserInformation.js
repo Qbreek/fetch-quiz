@@ -1,12 +1,25 @@
 // Fetches user information from the provided url argument using the value stored in session storage.
 export default async function displayUserInformation(url) {
     
-    const userData = await fetch(url);
-    let users = await userData.json();
-    users = [...users];
-    const userId = Number(sessionStorage.getItem('userId'));
-    const userProfile = users.filter(user => user.id === userId);
-    createFullUserProfileElement(userProfile);
+    try {
+
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        console.log(response);
+        let users = await response.json();
+        users = [...users];
+        const userId = Number(sessionStorage.getItem('userId'));
+        const userProfileInfo = users.filter(user => user.id === userId);
+        createFullUserProfileElement(userProfileInfo);
+
+    } catch(error) {
+
+        console.error(`Could not get user information: ${error}`);
+
+    }
 }
 
 // Creates full user profile using session storage value.
