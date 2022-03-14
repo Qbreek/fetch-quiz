@@ -6,7 +6,6 @@ function userProfile() {
     
     displayUserInformation('https://jsonplaceholder.typicode.com/users');
     displayUserPosts('https://jsonplaceholder.typicode.com/posts');
-    
     const pseudoSubmitBtn = document.querySelector('.post-card-btn');
     // Simulates submit procedure? Maybe im wrong here
     pseudoSubmitBtn.addEventListener('click', formSubmitButtonLogic);

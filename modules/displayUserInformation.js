@@ -28,7 +28,7 @@ function createFullUserProfileElement(userData) {
     const userInfoContainer = document.querySelector('.user-full-profile-card');
 
     const profileSvg = document.createElement('embed');
-    profileSvg.src = '/svg/account_circle_black_48dp.svg';
+    profileSvg.src = '/fetch-quiz/svg/account_circle_black_48dp.svg';
 
     const fullname = document.createElement('h2');
     fullname.textContent = userData[0].name;
