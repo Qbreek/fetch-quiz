@@ -54,6 +54,7 @@ export default function createPostElementCard(postInfo) {
     // perform pseudo delete
     deleteBtn.addEventListener('click', () => {
         deletePost(postIdSecure, postItemCard);
+        alert('Check console');
     })
 
     // perform pseudo patch
