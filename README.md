@@ -2,6 +2,8 @@
 
 My solution for the Fetch API quiz.
 
+LIVE : https://qbreek.github.io/fetch-quiz/
+
 ## 1. Fetch the users
 
 Instead of loging only the first 5 in the console I present all the users into the view.
