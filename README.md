@@ -2,7 +2,7 @@
 
 My solution for the Fetch API quiz.
 
-LIVE : https://qbreek.github.io/fetch-quiz/
+LIVE : https://qbreek.github.io/fetch-study/
 
 ## 1. Fetch the users
 
